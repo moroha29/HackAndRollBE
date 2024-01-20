@@ -1,13 +1,8 @@
-from .routers import router
 from dotenv import load_dotenv
-from fastapi import FastAPI
-import os
-
 load_dotenv()
-MONGO_USERNAME = os.getenv("MONGO_USERNAME")
-MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
 
-print(MONGO_USERNAME, MONGO_PASSWORD)
+from .routers import router
+from fastapi import FastAPI
 
 
 app = FastAPI()
