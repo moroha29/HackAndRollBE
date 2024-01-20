@@ -38,9 +38,12 @@ async def fetch_all(user_id: str) -> list[dict]:
     return result
 
 
-async def answer_question(question_id: str, answer: dict) -> bool:
-    result = await questions.update_one(
+async def answer_question(question_id: str, answer: dict) -> Optional[dict]:
+    await questions.update_one(
         {"_id": ObjectId(question_id)}, {"$push": {"answers": answer}}
     )
-    question_id = str(result.upserted_id)
-    return result.modified_count > 0
+    question = await questions.find_one({"_id": ObjectId(question_id)})
+    if question is None:
+        return None
+    question["_id"] = str(question["_id"])
+    return question

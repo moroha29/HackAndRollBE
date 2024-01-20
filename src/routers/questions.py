@@ -45,7 +45,7 @@ async def create_question(
 async def answer(
     answer_input: AnswerInputModel,
     user: Annotated[UserModel, Depends(get_current_user)],
-) -> bool:
+):
     if user._id is None:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
 
