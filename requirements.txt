@@ -1,9 +1,10 @@
 fastapi
 uvicorn[standard]
-<<<<<<< Updated upstream
-=======
 python-dotenv
+motor
+pymongo[srv]
+python-jose[cryptography]
+passlib[bcrypt]
 openai
 tiktoken
 numpy
->>>>>>> Stashed changes
