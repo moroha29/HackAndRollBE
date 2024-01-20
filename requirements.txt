@@ -1,2 +1,9 @@
 fastapi
 uvicorn[standard]
+<<<<<<< Updated upstream
+=======
+python-dotenv
+openai
+tiktoken
+numpy
+>>>>>>> Stashed changes
