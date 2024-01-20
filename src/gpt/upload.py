@@ -58,8 +58,13 @@ async def fetch_generated() -> Optional[dict]:
         if not o or o.isspace():
             continue
         options.add(o.strip().lower())
-    options.add("check results")
-    options = list(options)
+
+    default_option = "check results"
+    if default_option in options:
+        options.remove(default_option)
+    options = sorted(options)
+    # force this to be the last option
+    options.append(default_option)
 
     return {
         "question": question,
