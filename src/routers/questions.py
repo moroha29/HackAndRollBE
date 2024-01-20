@@ -27,7 +27,7 @@ async def get_all(user: Annotated[UserModel, Depends(get_current_user)]):
     if user._id is None:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    questions = await fetch_all()
+    questions = await fetch_all(user._id)
     return questions
 
 

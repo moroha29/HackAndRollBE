@@ -28,8 +28,8 @@ async def fetch_random(user_id: str) -> Optional[dict]:
     return question
 
 
-async def fetch_all() -> list[dict]:
-    cursor = questions.find()
+async def fetch_all(user_id: str) -> list[dict]:
+    cursor = questions.find({"answers": {"$not": {"$elemMatch": {"user_id": user_id}}}})
     result = []
     async for q in cursor:
         q["_id"] = str(q["_id"])
@@ -39,6 +39,8 @@ async def fetch_all() -> list[dict]:
 
 
 async def answer_question(question_id: str, answer: dict) -> bool:
-    result = await questions.update_one({"_id": ObjectId(question_id)}, {"$push": {"answers": answer}})
+    result = await questions.update_one(
+        {"_id": ObjectId(question_id)}, {"$push": {"answers": answer}}
+    )
     question_id = str(result.upserted_id)
     return result.modified_count > 0
