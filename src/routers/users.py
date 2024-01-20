@@ -7,7 +7,7 @@ from typing_extensions import Annotated
 router = APIRouter()
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED)
+@router.post("/register/", status_code=status.HTTP_201_CREATED)
 async def register(user: UserModel = Body(...)):
     """
     Registers a new user.
@@ -18,7 +18,7 @@ async def register(user: UserModel = Body(...)):
     return token
 
 
-@router.post("/login", status_code=status.HTTP_201_CREATED)
+@router.post("/login/", status_code=status.HTTP_201_CREATED)
 async def login(user: UserLoginModel = Body(...)):
     """
     Logins the user.
@@ -28,9 +28,3 @@ async def login(user: UserLoginModel = Body(...)):
     user_id = str(loggedin_user["_id"])
     token = create_access_token(user.name, user_id)
     return token
-
-
-# TODO: remove this test endpoint
-@router.get("/cook", status_code=status.HTTP_200_OK)
-async def cook(user: Annotated[UserModel, Depends(get_current_user)]):
-    return user.name

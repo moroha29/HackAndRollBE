@@ -1,6 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel, Field
 from pydantic.functional_validators import BeforeValidator
+from typing import Optional
 from typing_extensions import Annotated
 
 
@@ -33,6 +34,7 @@ class UserModel(BaseModel):
     Container for a single user record.
     """
 
+    _id: Optional[PyObjectId]
     name: str = Field(...)
     hashed_password: str = Field(...)
     age_range: AgeRangeEnum = Field(...)
