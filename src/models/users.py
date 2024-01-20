@@ -38,10 +38,6 @@ class UserModel(BaseModel):
     age_range: AgeRangeEnum = Field(...)
     gender: GenderEnum = Field(...)
     marital_status: MaritalStatusEnum = Field(...)
-    # model_config = ConfigDict(
-    #     populate_by_name=True,
-    #     arbitrary_types_allowed=True,
-    # )
 
 
 class UserCollection(BaseModel):
@@ -53,3 +49,8 @@ class UserCollection(BaseModel):
     """
 
     students: list[UserModel]
+
+
+class UserLoginModel(BaseModel):
+    name: str = Field(...)
+    hashed_password: str = Field(...)
