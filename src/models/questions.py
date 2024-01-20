@@ -6,6 +6,7 @@ class QuestionModel(BaseModel):
     question: str = Field(...)
     options: list[str] = Field(...)
     answers: list[AnswerModel] = []
+    comments: list[str] = []
 
 
 class QuestionCollection(BaseModel):

@@ -1,6 +1,13 @@
 from ..auth.jwt import get_current_user
-from ..database.questions import add_question, answer_question, fetch_all, fetch_random
+from ..database.questions import (
+    add_question,
+    answer_question,
+    comment_question,
+    fetch_all,
+    fetch_random,
+)
 from ..models.answers import AnswerInputModel
+from ..models.comments import QuestionCommentModel
 from ..models.questions import QuestionModel
 from ..models.users import UserModel
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -60,4 +67,26 @@ async def answer(
         "marital_status": user.marital_status,
     }
     result = await answer_question(question_id, answer)
+    return result
+
+
+@router.post("/comment/", status_code=status.HTTP_200_OK)
+async def comment(
+    comment_input: QuestionCommentModel,
+    user: Annotated[UserModel, Depends(get_current_user)],
+):
+    if user._id is None:
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    question_id = comment_input.question_id
+    comment = comment_input.comment
+
+    comment = {
+        "question_id": str(question_id),
+        "comment": comment,
+        "age_range": user.age_range,
+        "gender": user.gender,
+        "marital_status": user.marital_status,
+    }
+    result = await comment_question(question_id, comment)
     return result

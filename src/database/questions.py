@@ -47,3 +47,14 @@ async def answer_question(question_id: str, answer: dict) -> Optional[dict]:
         return None
     question["_id"] = str(question["_id"])
     return question
+
+
+async def comment_question(question_id: str, comment: dict) -> Optional[dict]:
+    await questions.update_one(
+        {"_id": ObjectId(question_id)}, {"$push": {"comments": comment}}
+    )
+    question = await questions.find_one({"_id": ObjectId(question_id)})
+    if question is None:
+        return None
+    question["_id"] = str(question["_id"])
+    return question
