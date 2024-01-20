@@ -19,11 +19,12 @@ client = OpenAI()
 
 # print(client.fine_tuning.jobs.list(limit=10))
 
-response = client.chat.completions.create(
-  model="ft:gpt-3.5-turbo-1106:personal::8j3o6R3G",
-  messages=[
-    {"role": "system", "content": "PaisehBot is a generative bot that comes up with random extremely embarrassing question relating to an individual personal life."},
-    {"role": "user", "content": "Give me a paiseh question"}
-  ]
-)
-print(response.choices[0].message)
+async def fetch_generated() -> str:
+  response = client.chat.completions.create(
+    model="ft:gpt-3.5-turbo-1106:personal::8j3o6R3G",
+    messages=[
+      {"role": "system", "content": "PaisehBot is a generative bot that comes up with random extremely embarrassing question relating to an individual personal life."},
+      {"role": "user", "content": "Give me a paiseh question"}
+    ]
+  )
+  return response.choices[0].message.content
